@@ -148,7 +148,15 @@ class ChannelManager:
                 logger.info("Matrix channel enabled")
             except ImportError as e:
                 logger.warning("Matrix channel not available: {}", e)
-    
+        try:
+            from nanobot.channels.simple_web_chat import SimpleWebChatChannel
+            self.channels["simple_web_chat"] = SimpleWebChatChannel(
+                None,
+                self.bus,
+            )
+            logger.info("SimpleWebChat channel enabled")
+        except ImportError as e:
+            logger.warning("SimpleWebChat channel not available: {}", e)
     async def _start_channel(self, name: str, channel: BaseChannel) -> None:
         """Start a channel and log any exceptions."""
         try:
